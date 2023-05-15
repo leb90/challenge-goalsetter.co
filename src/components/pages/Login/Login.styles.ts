@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { device } from "../../../utils/media";
+import { motion } from "framer-motion";
 
 interface LoginProps {
   disabled?: boolean;
@@ -26,7 +27,7 @@ export const Card = styled.div<LoginProps>`
 
   @media ${device.tablet} {
     width: 290px;
-    height: ${({ expanded }) => (expanded ? "450px" : "344px")};
+    min-height: ${({ expanded }) => (expanded ? "450px" : "344px")};
   }
 `;
 
@@ -113,7 +114,7 @@ export const Input = styled.div`
   position: relative;
 `;
 
-export const ForgotPasswordLink = styled.a<LoginProps>`
+export const ForgotPasswordLink = styled.a`
   font-family: "Avenir";
   font-style: normal;
   font-weight: 600;
@@ -122,7 +123,7 @@ export const ForgotPasswordLink = styled.a<LoginProps>`
   display: flex;
   align-items: center;
   text-decoration-line: underline;
-  color: ${({ expanded }) => (expanded ? "#FFFFFF" : "#9733ca")};
+  color: #9733ca
 `;
 
 export const Button = styled.button`
@@ -138,9 +139,8 @@ export const Button = styled.button`
   border-radius: 8px;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  
   @media ${device.tablet} {
-    bottom: 24px;
-    position: relative;
     width: 290px;
   }
 `;
@@ -166,60 +166,38 @@ export const ErrorMail = styled.span`
   color: #e65151;
 `;
 
-export const Notification = styled.div`
+export const Notification = styled(motion.div)`
   display: flex;
-  flex-direction: column;
   align-items: center;
   padding: 0px;
   gap: 8px;
   width: 100%;
-  height: 64px;
+  padding: 8px 0;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
 `;
 
 export const NotificationIcon = styled.img`
-  position: relative;
-  right: 10px;
-  top: 6px;
   width: 48px;
   height: 48px;
-  @media ${device.tablet} {
-    right: 0px;
-  }
 `;
 
-export const NotificationText = styled.span`
+export const NotificationText = styled.div`
   color: #ffffff;
   font-family: "Avenir";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 24px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
-  @media ${device.tablet} {
-    line-height: 16px;
+  ${ForgotPasswordLink} {
+    color: #ffffff;
   }
-`;
 
-export const NotificationInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 40px;
-  position: relative;
-  right: 30px;
-  @media ${device.tablet} {
-    right: 0px;
+  & p {
+    margin: 0;
+    font-weight: 400;
   }
-`;
-export const NotificationLink = styled.div`
-  position: relative;
-  right: 80px;
-  bottom: 20px;
-  @media ${device.tablet} {
-    right: 28px;
-    bottom: 10px;
-  }
+
 `;

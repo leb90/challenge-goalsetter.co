@@ -14,8 +14,6 @@ import {
   Notification,
   NotificationText,
   NotificationIcon,
-  NotificationInfo,
-  NotificationLink,
   InputContainerInput,
   Input,
 } from "./Login.styles";
@@ -54,9 +52,10 @@ const Login: React.FC = () => {
   }, [email, password, emailError]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsError(false);
     const value = e.target.value;
     let formattedValue = value;
-    
+
     if (/^[0-9\s-]*$/.test(value)) {
       formattedValue = formatPhoneNumber(value);
     }
@@ -98,18 +97,14 @@ const Login: React.FC = () => {
     <Card expanded={isError ? 1 : 0}>
       <Title>Log in</Title>
       {isError && (
-        <Notification>
-          <NotificationInfo>
-            <NotificationIcon src={notificationSvg} alt="Notification" />
-            <NotificationText>
-              Your email or password is incorrect. Try again.
-            </NotificationText>
-          </NotificationInfo>
-          <NotificationLink>
-            <ForgotPasswordLink href="#" expanded={isError ? 1 : 0}>
-              Forgot Password?
-            </ForgotPasswordLink>
-          </NotificationLink>
+        <Notification initial={{ opacity: 0,}} animate={{opacity: 1}}
+        >
+          <NotificationIcon src={notificationSvg} alt="Notification" />
+
+          <NotificationText>
+            <p>Your email or password is incorrect. Try again.</p>
+            <ForgotPasswordLink href="#">Forgot Password?</ForgotPasswordLink>
+          </NotificationText>
         </Notification>
       )}
       <InputsContainer>
@@ -145,7 +140,11 @@ const Login: React.FC = () => {
         </InputContainer>
         <ForgotPasswordLink href="#">Forgot Password?</ForgotPasswordLink>
       </InputsContainer>
-      <Button data-testid="button-continue" onClick={handleLogin} disabled={!isValid}>
+      <Button
+        data-testid="button-continue"
+        onClick={handleLogin}
+        disabled={!isValid}
+      >
         {isLoading ? (
           <Spinner />
         ) : (
