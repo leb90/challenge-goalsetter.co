@@ -13,6 +13,7 @@ export const AppContainer = styled.div`
 
 export const ContentContainer = styled.main<AppContainerProps>`
   position: relative;
+  padding: 1rem;
   background: #500f71;
   background-image: url(${backgroundImage});
   background-size: cover;
