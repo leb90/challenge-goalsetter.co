@@ -23,10 +23,11 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
     padding: 16px;
     gap: 58px;
     height: 64px;
-  }
-  @media (orientation: landscape) {
+    @media (orientation: landscape) {
     height: auto;
   }
+  }
+
 `;
 
 export const LogoWrapper = styled.div`
