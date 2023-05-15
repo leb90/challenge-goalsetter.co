@@ -19,9 +19,9 @@ import {
   InputContainerInput,
   Input,
 } from "./Login.styles";
-import eyeClosed from "../../../assets/svg/close-eye.svg";
-import eyeOpen from "../../../assets/svg/open-eye.svg";
-import notificationSvg from "../../../assets/svg/notification.svg";
+import eyeClosed from "../../../assets/svg/Close-eye.svg";
+import eyeOpen from "../../../assets/svg/Open-eye.svg";
+import notificationSvg from "../../../assets/svg/Notification.svg";
 import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../common/Spinner";
