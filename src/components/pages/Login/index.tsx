@@ -24,16 +24,25 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../common/Spinner";
 
-const formatPhoneNumber = (value = ''): string => {
-  const match = value
-    .replace(/\D+/g, '')
-    .match(/([^\d]*\d[^\d]*){1,10}$/)?.[0] || '';
+const formatPhoneNumber = (value = ""): string => {
+  const match =
+    value.replace(/\D+/g, "").match(/([^\d]*\d[^\d]*){1,10}$/)?.[0] || "";
   const part1 = match.length > 2 ? `(${match.substring(0, 3)})` : match;
-  const part2 = match.length > 3 ? ` ${match.substring(3, 6)}` : '';
-  const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : '';
+  const part2 = match.length > 3 ? ` ${match.substring(3, 6)}` : "";
+  const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : "";
   return `${part1}${part2}${part3}`;
 };
 
+const containsLetters = (value: string): boolean => {
+  const sanitizedValue = value.replace(/[()]/g, "");
+  const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (let i = 0; i < sanitizedValue.length; i++) {
+    if (alphabet.indexOf(sanitizedValue[i]) !== -1) {
+      return true;
+    }
+  }
+  return false;
+};
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -57,15 +66,14 @@ const Login: React.FC = () => {
     setIsError(false);
     const value = e.target.value;
     let formattedValue = value;
+    const hasInvalidLetters = containsLetters(value);
 
-    if (/([^\d]*\d[^\d]*){1,10}$/.test(value)) {
+    if (/([^\d]*\d[^\d]*){1,10}$/.test(value) && !hasInvalidLetters) {
       formattedValue = formatPhoneNumber(value);
     }
-
-    setEmail(formattedValue);
-    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formattedValue);
     const isNumberValid = /^\(\d{3}\)\s?\d{3}-\d{4}$/.test(formattedValue);
-
+    setEmail(formattedValue);
     setEmailError(!isEmailValid && !isNumberValid);
   };
 
@@ -99,8 +107,7 @@ const Login: React.FC = () => {
     <Card expanded={isError ? 1 : 0}>
       <Title>Log in</Title>
       {isError && (
-        <Notification initial={{ opacity: 0,}} animate={{opacity: 1}}
-        >
+        <Notification initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <NotificationIcon src={notificationSvg} alt="Notification" />
 
           <NotificationText>
