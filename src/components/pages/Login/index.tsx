@@ -24,14 +24,16 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../common/Spinner";
 
-const formatPhoneNumber = (value: string) => {
-  const cleanedValue = value.replace(/\D/g, "");
-  const match = cleanedValue.match(/^(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    return `(${match[1]}) ${match[2]}-${match[3]}`;
-  }
-  return value;
+const formatPhoneNumber = (value = ''): string => {
+  const match = value
+    .replace(/\D+/g, '')
+    .match(/([^\d]*\d[^\d]*){1,10}$/)?.[0] || '';
+  const part1 = match.length > 2 ? `(${match.substring(0, 3)})` : match;
+  const part2 = match.length > 3 ? ` ${match.substring(3, 6)}` : '';
+  const part3 = match.length > 6 ? `-${match.substring(6, 10)}` : '';
+  return `${part1}${part2}${part3}`;
 };
+
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -56,7 +58,7 @@ const Login: React.FC = () => {
     const value = e.target.value;
     let formattedValue = value;
 
-    if (/^[0-9\s-]*$/.test(value)) {
+    if (/([^\d]*\d[^\d]*){1,10}$/.test(value)) {
       formattedValue = formatPhoneNumber(value);
     }
 
