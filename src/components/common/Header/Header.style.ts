@@ -24,10 +24,9 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
     gap: 58px;
     height: 64px;
     @media (orientation: landscape) {
-    height: auto;
+      height: auto;
+    }
   }
-  }
-
 `;
 
 export const LogoWrapper = styled.div`

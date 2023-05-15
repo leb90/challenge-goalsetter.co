@@ -10,10 +10,17 @@ import {
   SignupButton,
   ContainerFrame,
 } from "./Home.style";
-import { Link } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import mobile from "../../../assets/images/mobile.png";
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+
+  const onLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <CenteredContainer>
       <ContainerFrame
@@ -30,9 +37,7 @@ const Home: React.FC = () => {
         </TextContainer>
       </ContainerFrame>
       <ButtonContainer>
-        <Link to="/login">
-          <LoginButton>Log In</LoginButton>
-        </Link>
+        <LoginButton onClick={onLogin}>Log In</LoginButton>
         <SignupButton>Sign Up</SignupButton>
       </ButtonContainer>
     </CenteredContainer>
