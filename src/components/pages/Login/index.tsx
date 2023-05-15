@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Card,
   ForgotPasswordLink,
@@ -54,6 +54,8 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const previousValueRef = useRef<string | undefined>("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const isEmailValid = email.length > 0;
@@ -63,14 +65,22 @@ const Login: React.FC = () => {
   }, [email, password, emailError]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const previousValue = previousValueRef.current;
+    const currentValue = inputRef.current?.value;
+
     setIsError(false);
     const value = e.target.value;
     let formattedValue = value;
     const hasInvalidLetters = containsLetters(value);
 
-    if (/([^\d]*\d[^\d]*){1,10}$/.test(value) && !hasInvalidLetters) {
+    if (
+      /([^\d]*\d[^\d]*){1,10}$/.test(value) &&
+      !hasInvalidLetters &&
+      previousValue !== currentValue
+    ) {
       formattedValue = formatPhoneNumber(value);
     }
+    previousValueRef.current = currentValue;
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formattedValue);
     const isNumberValid = /^\(\d{3}\)\s?\d{3}-\d{4}$/.test(formattedValue);
     setEmail(formattedValue);
@@ -122,6 +132,7 @@ const Login: React.FC = () => {
           <InputField
             type="text"
             value={email}
+            ref={inputRef}
             onChange={handleEmailChange}
             placeholder="Ej: hello@goalsetter.co or (999) 999-9999"
             expanded={emailError ? 1 : 0}
