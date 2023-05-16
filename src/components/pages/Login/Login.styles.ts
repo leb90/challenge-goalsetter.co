@@ -82,6 +82,11 @@ export const InputField = styled.input<LoginProps>`
   border-radius: 12px;
   border-color: ${({ expanded }) => (expanded ? "#e65151" : "#000000")};
   outline-color: ${({ expanded }) => (expanded ? "#e65151" : "#000000")};
+
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
 `;
 
 export const Placeholder = styled.span`
@@ -123,7 +128,7 @@ export const ForgotPasswordLink = styled.a`
   display: flex;
   align-items: center;
   text-decoration-line: underline;
-  color: #9733ca
+  color: #9733ca;
 `;
 
 export const Button = styled.button`
@@ -139,7 +144,7 @@ export const Button = styled.button`
   border-radius: 8px;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-  
+
   @media ${device.tablet} {
     width: 290px;
   }
@@ -199,5 +204,4 @@ export const NotificationText = styled.div`
     margin: 0;
     font-weight: 400;
   }
-
 `;
