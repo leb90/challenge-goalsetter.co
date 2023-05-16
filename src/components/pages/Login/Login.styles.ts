@@ -83,8 +83,8 @@ export const InputField = styled.input<LoginProps>`
   border-color: ${({ expanded }) => (expanded ? "#e65151" : "#000000")};
   outline-color: ${({ expanded }) => (expanded ? "#e65151" : "#000000")};
 
-  input[type="password"]::-ms-reveal,
-  input[type="password"]::-ms-clear {
+  &::-ms-reveal,
+  &::-ms-clear {
     display: none;
   }
 `;
