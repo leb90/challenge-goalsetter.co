@@ -4,7 +4,7 @@ export const validateLogin = (
 ): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const validEmail = email === "user@goalsetter.co" || "(987) 654-3210";
+      const validEmail = email === "user@goalsetter.co" || email === "(987) 654-3210";
       const validPassword = password === "Qwerty1234!";
 
       const isValid = validEmail && validPassword;
